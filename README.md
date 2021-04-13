@@ -14,7 +14,7 @@ At this point the program:
 
 ## Tech/framework used
 <b>This project uses</b>
-- vanila JavaScript
+- vanilla JavaScript
 - [webpack](https://webpack.js.org/) for deployment
 
 
