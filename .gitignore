@@ -1,4 +1,6 @@
 src/index.html
+src/worldMap.js
+src/game.js
 
 # Logs
 logs

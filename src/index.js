@@ -1,4 +1,8 @@
+// import Game from './game'
+
 const ctx = document.getElementById("myCanvas").getContext("2d");
+
+//////////////// worldMap.js
 
 class WorldMap {
   constructor (width, height, renderingContext) {
@@ -19,7 +23,6 @@ class WorldMap {
         }
       }
     }
-    console.log(this.cells)
   }
   drawCell(x, y, type) {
     const worldX = x * this.worldCellWidth;
@@ -38,17 +41,17 @@ class WorldMap {
   }
 }
 
-// function getIndexOfK(arr, k) {
-//   for (var i = 0; i < arr.length; i++) {
-//     var index = arr[i].indexOf(k);
-//     if (index > -1) {
-//       return [i, index];
-//     }
-//   }
-// }
+////////////////// game.js
+
+const directions = {
+  RIGHT: "right",
+  LEFT: "left",
+  UP: "up",
+  DOWN: "down",
+ }
 
 class Game {
-  constructor (width, height, renderingContext, rate) {
+  constructor (width, height, renderingContext, rate) {   
     this.width = width;
     this.height = height;
     this.worldMap = new WorldMap(this.width, this.height, renderingContext);
@@ -58,7 +61,7 @@ class Game {
     this.start = true;
     this.snakeHeadCoordinates = [];
     this.snakeLength = 3;
-    this.snakeDirection = 'right';
+    this.snakeDirection = directions.RIGHT;
   }
   gameLoop() {
     window.requestAnimationFrame(this.gameLoop);
@@ -68,33 +71,34 @@ class Game {
     if (this.start) {
       this.placeSnake();
       this.start = false;
+      this.worldMap.draw();
     };
     
     if(delta > this.rate) {
       
-      this.placeApple();
-      this.worldMap.draw();
 
-      console.log(this.snakeHeadCoordinates);
-
+      console.log(this.snakeHeadCoordinates)
       switch (this.snakeDirection){
-        case 'right':
+        case directions.RIGHT:
           this.snakeHeadCoordinates[0]++;
           this.worldMap.setCell(this.snakeHeadCoordinates[0], this.snakeHeadCoordinates[1], this.snakeLength);
           break;
-        case 'left':
+        case directions.LEFT:
           this.snakeHeadCoordinates[0]--;
           this.worldMap.setCell(this.snakeHeadCoordinates[0], this.snakeHeadCoordinates[1], this.snakeLength);
           break;
-        case 'up':
+        case directions.UP:
           this.snakeHeadCoordinates[1]--;
           this.worldMap.setCell(this.snakeHeadCoordinates[0], this.snakeHeadCoordinates[1], this.snakeLength);
           break;
-        case 'down':
+        case directions.DOWN:
           this.snakeHeadCoordinates[1]++;
           this.worldMap.setCell(this.snakeHeadCoordinates[0], this.snakeHeadCoordinates[1], this.snakeLength);
           break;
       }
+      this.placeApple();
+      this.worldMap.draw();
+      
 
       this.lastTime = currentTime - (delta % this.rate);
     }
@@ -116,6 +120,8 @@ class Game {
     }
   }
 }
+
+////////////////// 
 
 let game = new Game(15, 7, ctx, 1);
 game.gameLoop()
