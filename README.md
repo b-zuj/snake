@@ -16,6 +16,3 @@ At this point the program:
 <b>This project uses</b>
 - vanilla JavaScript
 - [webpack](https://webpack.js.org/) for deployment
-
-
-## License
