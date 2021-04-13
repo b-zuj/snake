@@ -1,6 +1,3 @@
-import _ from 'lodash'
-
-
 class WorldMap {
   constructor (width, height, renderingContext) {
     this.width = width;
@@ -41,8 +38,10 @@ class Game {
     this.height = height;
     this.worldMap = new WorldMap(this.width, this.height, renderingContext);
     this.rate = 1000/rate;
-    this.lastTime = (new Date()).getTime()
+    this.lastTime = (new Date()).getTime();
     this.gameLoop = this.gameLoop.bind(this);
+    this.snakeLength = 3;
+    this.snakeDirection = 'right'; // x++; 'left' - x--, 'up' - y++, 'down' - y--
   }
   gameLoop() {
     window.requestAnimationFrame(this.gameLoop);
@@ -51,7 +50,9 @@ class Game {
     let delta = (currentTime-this.lastTime);
 
     if(delta > this.rate) {
+      console.log(this.snakeLength)
       this.placeApple();
+      this.placeSnake();
       this.worldMap.draw();
       this.lastTime = currentTime - (delta % this.rate);
     }
@@ -60,6 +61,16 @@ class Game {
     const x = Math.floor(Math.random() * this.width);
     const y = Math.floor(Math.random() * this.height);
     this.worldMap.setCell(x, y, 'x')
+  }
+  placeSnake() {
+    const headX = Math.round(this.width/2)-1;
+    const headY = Math.round(this.height/2)-1;
+    for (let i=0; i < this.snakeLength; i++) {
+      let x = headX  - i;
+      let y = headY;
+      let value = this.snakeLength - i
+      this.worldMap.setCell(x, y, value)
+    }
   }
 }
 
