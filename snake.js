@@ -37,13 +37,20 @@ class Game {
     this.width = width;
     this.height = height;
     this.worldMap = new WorldMap(this.width, this.height, renderingContext);
-    this.rate = rate;
+    this.rate = 1000/rate;
+    this.lastTime = (new Date()).getTime()
+    this.gameLoop = this.gameLoop.bind(this);
   }
-  async gameLoop() {
-    while (true) {
+  gameLoop() {
+    window.requestAnimationFrame(this.gameLoop);
+    
+    const currentTime = (new Date()).getTime();
+    let delta = (currentTime-this.lastTime);
+
+    if(delta > this.rate) {
       this.placeApple();
       this.worldMap.draw();
-      await new Promise(r => setTimeout(r, 1000/this.rate));
+      this.lastTime = currentTime - (delta % this.rate);
     }
   }
   placeApple() {
