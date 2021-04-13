@@ -1,4 +1,3 @@
-src/index.html
 src/worldMap.js
 src/game.js
 
@@ -86,7 +85,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist/main.js
+dist
 
 # Gatsby files
 .cache/
