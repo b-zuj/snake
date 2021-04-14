@@ -15,6 +15,7 @@ const directions = {
     this.lastTime = (new Date()).getTime();
     this.setStartingState = this.gameInit();
     this.gameLoop = this.gameLoop.bind(this);
+    this.placeApple = this.placeApple.bind(this);
     this.handleKeypress = this.handleKeypress.bind(this);
   }
 
@@ -24,7 +25,6 @@ const directions = {
     this.snakeLength = 3;
     this.snakeHeadCoordinates = [];
     this.snakeDirection = directions.RIGHT;
-    this.appleCoordinates = [];
     this.placeSnake();
     this.placeApple();
     this.worldMap.draw();
@@ -64,16 +64,11 @@ const directions = {
         default:
           return;
       }
-      const nextCellValue = this.worldMap.cells[this.snakeHeadCoordinates[0]][this.snakeHeadCoordinates[1]]
 
+      const nextCellValue = this.worldMap.cells[this.snakeHeadCoordinates[0]][this.snakeHeadCoordinates[1]]
       if (nextCellValue > 0) {
         this.gameInit()
-      }
-      
-      if (
-        this.snakeHeadCoordinates[0] == this.appleCoordinates[0] &&
-        this.snakeHeadCoordinates[1] == this.appleCoordinates[1]
-      ) {
+      } else if (nextCellValue == 'x') {
         this.snakeLength++;
         this.placeApple();
         this.rate = this.rate * 0.95
@@ -88,8 +83,12 @@ const directions = {
   placeApple() {
     const x = Math.floor(Math.random() * this.width);
     const y = Math.floor(Math.random() * this.height);
-    this.worldMap.setCell(x, y, 'x');
-    this.appleCoordinates = [x, y];
+    const worldCellValue = this.worldMap.cells[x][y]
+    if (worldCellValue == 0) {
+      this.worldMap.setCell(x, y, 'x');
+      return;
+    }
+    this.placeApple();
   }
   placeSnake() {
     const headX = Math.round(this.width/2)-1;
