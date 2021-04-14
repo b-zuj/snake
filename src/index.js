@@ -1,9 +1,9 @@
 import Game from './game';
 
-const ctx = document.getElementById('myCanvas').getContext('2d');
+const context = document.getElementById('myCanvas').getContext('2d');
 
-const game = new Game(30, 15, ctx);
+const game = new Game(30, 15, context);
 
-document.addEventListener('keydown', e => game.handleKeypress(e), false);
+document.addEventListener('keydown', event => game.handleKeypress(event), false);
 
 game.gameLoop();
