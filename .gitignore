@@ -1,6 +1,4 @@
-src/worldMap.js
-src/game.js
-
+dist/index.js
 # Logs
 logs
 *.log
