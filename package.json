@@ -7,14 +7,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --env dev",
     "build": "webpack --env prod",
-    "lint": "eslint ./ --ignore-path .gitignore",
-    "lint:fix": "npm run lint -- --fix"
+    "lint": "eslint '**/*.js'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.24.0",
+    "eslint-config-salt": "^1.1.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "html-webpack-plugin": "^5.3.1",
     "webpack": "^5.32.0",
