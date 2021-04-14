@@ -18,7 +18,6 @@ const directions = {
     this.handleKeypress = this.handleKeypress.bind(this);
   }
 
-
   gameInit() {
     this.worldMap = new WorldMap(this.width, this.height, this.renderingContext);
     this.rate = 1000/3;
@@ -40,16 +39,30 @@ const directions = {
       switch (this.snakeDirection){
         case directions.RIGHT:
           this.snakeHeadCoordinates[0]++;
+          this.snakeHeadCoordinates[0] == this.width ? 
+            this.snakeHeadCoordinates[0] = 0 :
+            null;
           break;
         case directions.LEFT:
           this.snakeHeadCoordinates[0]--;
+          this.snakeHeadCoordinates[0] < 0 ? 
+            this.snakeHeadCoordinates[0] = this.width-1 :
+            null;
           break;
         case directions.UP:
           this.snakeHeadCoordinates[1]--;
+          this.snakeHeadCoordinates[1] < 0 ? 
+            this.snakeHeadCoordinates[1] = this.height-1 :
+            null;
           break;
         case directions.DOWN:
           this.snakeHeadCoordinates[1]++;
+          this.snakeHeadCoordinates[1] == this.height ? 
+            this.snakeHeadCoordinates[1] = 0 :
+            null;
           break;
+        default:
+          return;
       }
       const nextCellValue = this.worldMap.cells[this.snakeHeadCoordinates[0]][this.snakeHeadCoordinates[1]]
 
@@ -61,7 +74,6 @@ const directions = {
         this.snakeHeadCoordinates[0] == this.appleCoordinates[0] &&
         this.snakeHeadCoordinates[1] == this.appleCoordinates[1]
       ) {
-        console.log(this.rate)
         this.snakeLength++;
         this.placeApple();
         this.rate = this.rate * 0.95

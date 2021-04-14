@@ -7,6 +7,7 @@ export default class WorldMap {
     this.worldCellHeight = this.renderingContext.canvas.scrollHeight/this.height;
     this.cells = this.generateCells();
   }
+  
   generateCells() {
     return [...Array(this.width)].map(x=>Array(this.height).fill(0))
   }
